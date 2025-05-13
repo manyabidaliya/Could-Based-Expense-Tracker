@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+input, select, button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.controls, .filters {
+  margin-bottom: 10px;
+}
+
+.expense-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.dark-mode .expense-row {
+  background-color: #1e1e1e;
+}
+
+.controls button, .filters button {
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .expense-row {
+    flex-direction: column;
+  }
+}
