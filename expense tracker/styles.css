@@ -1,0 +1,126 @@
+body {
+  font-family: 'Nunito', Arial, sans-serif;
+  padding: 20px;
+  background: linear-gradient(135deg, #fdf6e3 0%, #f5e1ff 100%);
+  color: #2d3142;
+  transition: background 0.5s, color 0.3s;
+  min-height: 100vh;
+}
+
+.dark-mode {
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  color: #f8fafc;
+}
+
+input, select, button {
+  margin: 5px;
+  padding: 12px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1.5px solid #e0c3fc;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  outline: none;
+  font-family: inherit;
+}
+
+input:focus, select:focus {
+  border-color: #a685e2;
+  box-shadow: 0 0 0 2px #a685e244;
+}
+
+button {
+  background: linear-gradient(90deg, #a685e2 0%, #f7797d 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 2px 8px #a685e222;
+  transition: background 0.3s, transform 0.1s, box-shadow 0.2s;
+  letter-spacing: 0.5px;
+}
+
+button:hover, button:focus {
+  background: linear-gradient(90deg, #f7797d 0%, #a685e2 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px #a685e244;
+}
+
+.controls, .filters {
+  margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.expense-row, .expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background: linear-gradient(90deg, #f8fafc 0%, #e0c3fc 100%);
+  padding: 16px 20px;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #a685e222;
+  animation: fadeIn 0.5s;
+  font-size: 1.08em;
+}
+
+.dark-mode .expense-row, .dark-mode .expense-item {
+  background: linear-gradient(90deg, #232526 0%, #a685e2 100%);
+  box-shadow: 0 2px 8px #0002;
+}
+
+.controls button, .filters button {
+  margin-left: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #a685e2;
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+  color: #f7797d;
+}
+
+#alertMsg {
+  font-weight: 600;
+  color: #f7797d;
+  animation: shake 0.3s;
+}
+
+@media (max-width: 600px) {
+  .expense-row, .expense-item {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1em;
+  }
+  .controls, .filters {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+@keyframes shake {
+  0% { transform: translateX(0);}
+  20% { transform: translateX(-5px);}
+  40% { transform: translateX(5px);}
+  60% { transform: translateX(-5px);}
+  80% { transform: translateX(5px);}
+  100% { transform: translateX(0);}
+}
+
+/* Chart.js custom background for dark mode */
+.dark-mode #expenseChart {
+  background: #232526;
+  border-radius: 12px;
+  padding: 10px;
+}

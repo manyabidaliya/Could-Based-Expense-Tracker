@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <style>
+    body.dark-mode { background: #222; color: #fff; }
+    .expense-item { border-bottom: 1px solid #ccc; padding: 8px 0; }
+    .btn { margin-right: 5px; }
+  </style>
+</head>
+<body class="bg-light">
+
+<!-- 🔐 Login/Signup Screen -->
+<div id="login-screen" class="container text-center py-5">
+  <h1 class="mb-4">Welcome to Expense Tracker</h1>
+  <p>Please login to continue</p>
+  <input type="email" id="email" class="form-control mb-2" placeholder="Email" required>
+  <input type="password" id="password" class="form-control mb-2" placeholder="Password" required>
+  <button onclick="login()" class="btn btn-primary mb-2">Login</button>
+  <button onclick="signUp()" class="btn btn-secondary mb-2">Sign Up</button>
+  <div class="mb-2">or</div>
+  <button id="googleSignIn" class="btn btn-danger">Sign in with Google</button>
+</div>
+
+<!-- ✅ Main App -->
+<div id="app" style="display: none; max-width: 700px;" class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Expense Tracker</h2>
+    <button onclick="logout()" class="btn btn-outline-danger">Logout</button>
+  </div>
+
+  <p><strong>Location:</strong> <span id="location">Detecting...</span></p>
+
+  <div class="mb-3">
+    <label for="limitInput" class="form-label"><strong>Set Monthly Spending Limit:</strong></label>
+    <div class="input-group mb-2">
+      <span class="input-group-text">₹</span>
+      <input type="number" id="limitInput" class="form-control" placeholder="e.g., 5000"/>
+      <button onclick="setSpendingLimit()" class="btn btn-outline-primary">Set Limit</button>
+    </div>
+    <p id="alertMsg" style="color: red;"></p>
+  </div>
+
+  <div class="row g-2 mb-3">
+    <div class="col-md-3">
+      <select id="category" class="form-select">
+        <option value="">Select Category</option>
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Health">Health</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="number" id="amount" class="form-control" placeholder="Amount" />
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="note" class="form-control" placeholder="Note (optional)" />
+    </div>
+    <div class="col-md-3 d-grid">
+      <button id="addBtn" class="btn btn-success">Add Expense</button>
+    </div>
+  </div>
+
+  <div class="row g-2 mb-3">
+    <div class="col-md-3">
+      <select id="filterCategory" class="form-select">
+        <option value="">All Categories</option>
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Health">Health</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select id="monthFilter" class="form-select">
+        <option value="">All Months</option>
+        <option value="01">January</option>
+        <option value="02">February</option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">August</option>
+        <option value="09">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select id="sortBy" class="form-select">
+        <option value="newest">Sort: Newest</option>
+        <option value="oldest">Sort: Oldest</option>
+        <option value="high">Sort: High to Low</option>
+        <option value="low">Sort: Low to High</option>
+      </select>
+    </div>
+    <div class="col-md-3 d-grid">
+      <button id="toggleBtn" class="btn btn-dark">Toggle Dark Mode</button>
+    </div>
+  </div>
+
+  <div class="mb-3 d-grid">
+    <button id="exportCSV" class="btn btn-info">Export as CSV</button>
+  </div>
+
+  <div id="expenseList" class="mb-3"></div>
+  <h3>Total: ₹<span id="totalAmount">0</span></h3>
+
+  <div id="categorySummary" class="mb-3">
+    <h4>Category-wise Summary (Monthly)</h4>
+    <ul id="summaryList"></ul>
+  </div>
+
+  <div class="my-4">
+    <canvas id="expenseChart" height="100"></canvas>
+  </div>
+</div>
+
+<!-- ✅ Script -->
+<script src="firebase-config.js"></script>
+
+</body>
+</html>
